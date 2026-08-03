@@ -1,0 +1,61 @@
+from bs4 import BeautifulSoup
+import requests
+import csv
+
+pagina = requests.get("https://quotes.toscrape.com")
+soup = BeautifulSoup(pagina.text,"html.parser")
+
+frases = soup.find_all("span", class_= "text")
+author = soup.find_all("small", class_= "author")
+quote = soup.find_all("div", class_= "quote")
+
+titulos = []
+autores = []
+tags = []
+
+for f in frases:
+    titulos.append(f.text)
+for a in author:
+    autores.append(a.text)
+for t in quote:
+    tags_html = t.find_all("a",class_="tag")
+    lista_tags = []
+    for tg in tags_html:
+        lista_tags.append(tg.text)
+    tags.append(lista_tags)
+
+for i in range(len(frases)):
+
+    print("CITAÇÃO: ")
+    print(f'{titulos[i]}')
+    print("="*75)
+
+    print("AUTOR: ")
+    print(f'{autores[i]}')
+    print("="*75)
+
+    print("TAGS: ")
+    print(f'{tags[i]}')
+    print("="*75)
+
+
+arquivo = open("citacoes.csv","w", newline = "",encoding = "UTF-8")
+
+escritor = csv.writer(arquivo)
+
+escritor.writerow(
+    ["Citação","Autor","Tags"]
+)
+
+for i in range(len(frases)):
+    escritor.writerow(
+        [titulos[i],
+        autores[i],
+        ", ".join(tags[i])]
+    )
+
+arquivo.close()
+
+print("="*75)
+print("Arquivo citacoes.csv criado com sucesso.")
+print("="*75)
