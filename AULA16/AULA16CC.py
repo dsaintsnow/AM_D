@@ -1,14 +1,17 @@
 from bs4 import BeautifulSoup
 import requests
 import csv
+
 pagina = requests.get("https://quotes.toscrape.com")
 soup = BeautifulSoup(pagina.text, "html.parser")
 frases = soup.find_all("span", class_="text")
 author = soup.find_all("small", class_="author")
 quote = soup.find_all("div", class_="quote")
+
 titulos = []
 autores = []
 tags = []
+
 for f in frases:
     titulos.append(f.text)
 for a in author:
@@ -56,5 +59,3 @@ arquivo.close()
 print("="*60)
 print("Arquivo citacoes.csv criado com sucesso.")
 print("="*60)
-
-#DONTPAD--
