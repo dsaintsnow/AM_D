@@ -50,14 +50,14 @@ arquivo = open(
     encoding="utf-8")
 
 escritor = csv.writer(arquivo)
-
 escritor.writerow(
-    ["Citação","Autor","Tags"]
+    ["ID","Citação","Autor","Tags"]
 )
 
 for i in range(len(titulos)):
     escritor.writerow(
         [
+        i+1,
         titulos[i],
         autores[i],
         ", ".join(tags[i])
@@ -96,4 +96,32 @@ print("\nAutor da maior frase:")
 print(autores[indice_maior])
 print("\nAutor da menor frase:")
 print(autores[indice_menor])
+print("=" * 60)
+
+arquivo_numpy = open(
+    "analise_numpy.csv",
+    "w",
+    newline="",
+    encoding="utf-8"
+)
+
+escritor_numpy = csv.writer(arquivo_numpy)
+
+escritor_numpy.writerow(
+    ["ID", "Caracteres", "Quantidade_Tags"]
+)
+
+for i in range(len(array_frases)):
+    escritor_numpy.writerow(
+        [
+            i+1,
+            array_frases[i],
+            array_tags[i]
+        ]
+    )
+
+arquivo_numpy.close()
+
+print("=" * 60)
+print("Arquivo analise_numpy.csv criado com sucesso.")
 print("=" * 60)

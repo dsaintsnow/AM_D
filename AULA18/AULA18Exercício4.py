@@ -3,7 +3,7 @@ import numpy as np
 
 a = np.array([10,20,30])
 a_uni = np.array([1,2,3])
-matriz_final = a+a_uni
+matriz_final = a*a_uni
 
 print(f"Array 3x1: {a}")
 print("="*80)
